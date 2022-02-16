@@ -102,6 +102,9 @@ def add(int1, int2):
 
 
 def divide(int1, int2):
+    if int2 == 0:
+        print("Cant divide by 0")
+        exit()
     return int1 / int2
 
 
@@ -121,61 +124,62 @@ def listcut(list1, list2):
         except ValueError:
             pass
 
+def calculator(equation):
+    ostring = "*+-/^"
+    equation = equation.replace(" ", "")
+    nstring = ""
+    nlist = []
+    olist = []
 
-ostring = "*+-/^"
-equation = input("Input an equation to calculate ")
-equation = equation.replace(" ", "")
-nstring = ""
-nlist = []
-olist = []
+    for char in equation:
+        if char in ostring:
+            if nstring == "" and char == "-":
+                nstring += "-"
+            else:
+                try:
+                    nlist.append(int(nstring))
+                    olist.append(char)
+                    nstring = ""
+                except ValueError:
+                    print(
+                        "Equation Not in bounds. Use only *,+,/,-,^ and digits. Avoid using multiple operators at once, other than negative numbers.")
+                    exit()
+        if char.isdigit():
+            nstring += char
+    try:
+        nlist.append(int(nstring))
+    except ValueError:
+        print(
+            "Equation Not in bounds. Use only *,+,/,-,^ and digits. Avoid using multiple operators at once, other than negative numbers.")
+        exit()
+    for i in range(0, len(olist)):
+        if olist[i] == "^":
+            nlist[i + 1] = power(nlist[i], nlist[i + 1])
+            nlist[i] = "$"
+            olist[i] = "$"
+    listcut(nlist, olist)
+    for i in range(0, len(olist)):
+        if olist[i] == "*":
+            nlist[i + 1] = multiply(nlist[i], nlist[i + 1])
+            nlist[i] = "$"
+            olist[i] = "$"
+        if olist[i] == "/":
+            nlist[i + 1] = divide(nlist[i], nlist[i + 1])
+            nlist[i] = "$"
+            olist[i] = "$"
+    listcut(nlist, olist)
+    n = nlist[0]
+    for i in range(0, len(olist)):
+        if olist[i] == "+":
+            # print(f"adding {n} and {nlist[i+1]}")
+            n = add(n, nlist[i + 1])
+        if olist[i] == "-":
+            n = subtract(n, nlist[i + 1])
+            # print(f"subtracting {n} and {nlist[i+1]}")
+        if olist[i] == "^":
+            n = power(n, nlist[i + 1])
+    print(f"{equation} = {n}")
+calculator(input("Input an equation to calculate "))
+# How im going to do the brackets. If "()" Make a new string and that string gets immediate priority. and it will be epic, but idk how to do this for more importsnt
 
-for char in equation:
-    if char in ostring:
-        if nstring == "" and char == "-":
-            nstring += "-"
-        else:
-            try:
-                nlist.append(int(nstring))
-                olist.append(char)
-                nstring = ""
-            except ValueError:
-                print(
-                    "Equation Not in bounds. Use only *,+,/,-,^ and digits. Avoid using multiple operators at once, other than negative numbers.")
-                exit()
-    if char.isdigit():
-        nstring += char
-try:
-    nlist.append(int(nstring))
-except ValueError:
-    print(
-        "Equation Not in bounds. Use only *,+,/,-,^ and digits. Avoid using multiple operators at once, other than negative numbers.")
-    exit()
-for i in range(0, len(olist)):
-    if olist[i] == "^":
-        nlist[i + 1] = power(nlist[i], nlist[i + 1])
-        nlist[i] = "$"
-        olist[i] = "$"
-listcut(nlist, olist)
-for i in range(0, len(olist)):
-    if olist[i] == "*":
-        nlist[i + 1] = multiply(nlist[i], nlist[i + 1])
-        nlist[i] = "$"
-        olist[i] = "$"
-    if olist[i] == "/":
-        nlist[i + 1] = divide(nlist[i], nlist[i + 1])
-        nlist[i] = "$"
-        olist[i] = "$"
-listcut(nlist, olist)
-n = nlist[0]
-for i in range(0, len(olist)):
-    if olist[i] == "+":
-        # print(f"adding {n} and {nlist[i+1]}")
-        n = add(n, nlist[i + 1])
-    if olist[i] == "-":
-        n = subtract(n, nlist[i + 1])
-        # print(f"subtracting {n} and {nlist[i+1]}")
-    if olist[i] == "^":
-        n = power(n, nlist[i + 1])
-print(f"{equation} = {n}")
 
-# How im going to do the brackets. If "()" Make a new string and that string gets immediate priority. and it will be epic, but idk how to do this for more impo
