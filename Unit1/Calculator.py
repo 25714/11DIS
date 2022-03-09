@@ -103,8 +103,8 @@ def add(int1, int2):
 
 def divide(int1, int2):
     if int2 == 0:
-        print("Cant divide by 0")
-        exit()
+        return "Cant divide by 0"
+
     return int1 / int2
 
 
@@ -124,6 +124,7 @@ def listcut(list1, list2):
         except ValueError:
             pass
 
+
 def calculator(equation):
     ostring = "*+-/^"
     equation = equation.replace(" ", "")
@@ -137,21 +138,19 @@ def calculator(equation):
                 nstring += "-"
             else:
                 try:
-                    nlist.append(int(nstring))
+                    nlist.append(float(nstring))
                     olist.append(char)
                     nstring = ""
                 except ValueError:
-                    print(
+                    return(
                         "Equation Not in bounds. Use only *,+,/,-,^ and digits. Avoid using multiple operators at once, other than negative numbers.")
-                    exit()
-        if char.isdigit():
+        if char.isdigit() or char == ".":
             nstring += char
     try:
-        nlist.append(int(nstring))
+        nlist.append(float(nstring))
     except ValueError:
-        print(
+        return(
             "Equation Not in bounds. Use only *,+,/,-,^ and digits. Avoid using multiple operators at once, other than negative numbers.")
-        exit()
     for i in range(0, len(olist)):
         if olist[i] == "^":
             nlist[i + 1] = power(nlist[i], nlist[i + 1])
@@ -165,6 +164,8 @@ def calculator(equation):
             olist[i] = "$"
         if olist[i] == "/":
             nlist[i + 1] = divide(nlist[i], nlist[i + 1])
+            if nlist[i+1] == "Cant divide by 0":
+                return nlist[i+1]
             nlist[i] = "$"
             olist[i] = "$"
     listcut(nlist, olist)
@@ -178,8 +179,14 @@ def calculator(equation):
             # print(f"subtracting {n} and {nlist[i+1]}")
         if olist[i] == "^":
             n = power(n, nlist[i + 1])
-    print(f"{equation} = {n}")
-calculator(input("Input an equation to calculate "))
+    return f"{equation} = {n}"
+
+
+running = True
+while running:
+    print(calculator(input("Input an equation to calculate ")))
+
+    if input("Would you like to run the calculator again? (Y/N) ").lower() != "y":
+        running = False
+
 # How im going to do the brackets. If "()" Make a new string and that string gets immediate priority. and it will be epic, but idk how to do this for more importsnt
-
-
