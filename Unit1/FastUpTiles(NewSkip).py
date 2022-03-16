@@ -56,6 +56,6 @@ def uptiles(num1,num2):
 
 
 
-uptiles(400,300)
+uptiles(200,298)
 t.ht()
 t.Screen().exitonclick()
