@@ -1,90 +1,3 @@
-# print("Hello World")
-# name = "Lucas"
-# print("My Name is " + name + ".")
-# teacher = "Mr Fenwickle"
-# print(f"your teacher is {teacher}.")
-# print("# Squares List - multi line version")
-# squares = []
-# for i in range(10):
-#     squares.append(i**2)
-# print(squares)
-#
-# print("#Squares - one line version")
-# print([i**2 for i in range(10)])
-# DECLARE Integer a = 5
-# Declare integer b = 2
-# DECALRE INeteger c = 3
-# DECLARE INTEGER RESULT
-# SET RESULT a+b*c
-# Display result
-#
-# a = 5
-# b = 2
-# c = 3
-# result = 0
-# result = a+b*c
-# print(result)
-#
-# Declare string favefood
-# display what is the name of your favourite food
-# input favouritefood
-# display you favourite food is
-# display fave food
-# faveFood = ""
-# print("What is the name of your favourite food")
-# favfood = input()
-# print("your favourite food is")
-# print("favourite food")
-# Declare string 1stprize
-# display enter the award for first prize
-# input 1stPrize
-# display the first prie winner will recieve, first prize.
-# 1stprize = ""
-# print("enter the award for first prize")
-# 1stprize = input()
-# print("te 1st boi get", 1stprize)
-# declare in low, int hihgh. av.
-# display enter low
-# input lowdisplay enet high
-# input high
-# se av to low+hig/2
-# display av
-# low = 1
-# high = 2
-# av = 1+2/2
-# print(av)
-# declare rm
-# rm = input
-# print rmlength
-# rm = 12
-# print(len(rm))
-
-
-# Declare Name
-# Decalre Address
-# Declare Number
-# Declare wantJob
-# DISPLAY "Your name is", name
-# DISPLAY "Your adress is", address
-# DISPLAY "Your number is", Number
-# DISPLAY "Your wantJOb is", wantJOb
-# name = "Lucas"
-# address = "no"
-# number = "420"
-# wantjob = "america"
-# print("Your name is", name)
-# print("Your address is", address, "way")
-# print("Your address is" + address + "way")
-# print(f"You address is {address} way")
-# print("Your number is", number)
-# print("Your wantJOb is", wantjob)
-
-# Declare totalSales
-# Declare profit
-# Input TotalSale
-# math profit = totalSale *0.23
-# totalSale = int(input(("What where the total sales this year? ")))
-# print("profit is $" + totalSale * 0.23)
 import turtle
 from turtle import *
 def draw_rectangle(x, y, length1, length2):
@@ -342,32 +255,60 @@ def checkpiece(piecetype,xcoord1,ycoord1,xcoord2,ycoord2,piece):
     whitepawnlist = ["0,1","0,2","-1,1","1,1"]
     blackpawnlist = ["0,-1","0,-2","-1,-1","1,-1"]
     pawnlists = [whitepawnlist,blackpawnlist]
+    newmoveslist = []
     if piecetype >= 5:
         for group in pawnlists[piecetype-5]:
             key = pieceping(int(xcoord2),int(ycoord2))
             xdif = group.split(",")[0]
             ydif = group.split(",")[1]
-            if int(xcoord1) == int(xcoord2) + int(xdif)*40:
-                if int(ycoord1) == int(ycoord2) + int(ydif)*40:
+            newxcoord = int(xcoord2) + int(xdif)*40
+            newycoord = int(ycoord2) + int(ydif)*40
+            if int(xcoord1) == newxcoord:
+                if int(ycoord1) == newycoord:
                     if int(ydif)%2 == 0 and coordinatelist[key-65] == f"{xcoord2},{ycoord2}":
                         return True
                     elif int(ydif) == 1 or int(ydif) == -1:
-                        return True
+                        if int(xdif) == 1 or int(xdif) == -1:
+                            print(f"{newxcoord},{newycoord}")
+                            print(turtledict.items())
+                            for i,v in turtledict.items():
+                                if f"{newxcoord},{newycoord}" == v:
+                                    return True
+                        else:
+                            return True
     else:
-        for group in orderlist[piecetype]:
+        for i,group in enumerate(orderlist[piecetype]):
             xdif = group.split(",")[0]
             ydif = group.split(",")[1]
             if int(xcoord1) == int(xcoord2) + int(xdif)*40:
                 if int(ycoord1) == int(ycoord2) + int(ydif)*40:
-                    print(group,kinglist)
                     if orderlist[piecetype] == kinglist:
                         if int(xdif)%2 == 0:
                             if not piece in piecemovedlist and not piece-4 in piecemovedlist and not piece+3 in piecemovedlist:
                                 return True
                         elif int(xdif) == 1 or int(xdif) == -1:
                             return True
+                    if orderlist[piecetype] == rooklist:
+                        if i <=6:
+                            print(1)
+                            return True
+                        elif i > 7 and i<=13:
+                            print(2)
+                            return True
+                        elif i > 13 and i<=20:
+                            print(3)
+                            return True
+                        elif i >20:
+                            print(4)
+                            return True
+
                     else:
                         return True
+def checklineofsight():
+    return(False)
+
+def checkenpassant():
+    return True
 
 def piecetype(num):
     rooklist = [0,7,24,31]
@@ -382,11 +323,9 @@ def piecetype(num):
         if num-65 in typelist:
             return i
     return 5
-
 def checktakepiece(colour):
     if colour >= 81:
         colour = "white"
-        print("white")
     else:
         colour = "black"
     for index,key in enumerate(turtledict.items()):
@@ -394,18 +333,14 @@ def checktakepiece(colour):
             for index2,key2 in enumerate(turtledict.items()):
                 if index2> 15:
                     if key[1] == key2[1]:
-                        print("take")
                         for i,v in enumerate(screen.turtles()):
                             if colour == "white":
                                 print(i,key[0])
                                 if i == key[0]:
-                                    print("white take")
                                     v.goto(-350,-350)
                                     turtledict[i] = f"{-2000},{-2000}"
                             if colour == "black":
-                                print(i,key[0])
                                 if i == key2[0]:
-                                    print(v)
                                     v.goto(-350,-350)
                                     turtledict[i] = f"-2000,-2000"
 
@@ -616,4 +551,3 @@ for i in range(32):
     turtledict[i+65] = coordinatelist[i]
 print(turtledict)
 screen.mainloop() # start everything runnin
-
