@@ -289,18 +289,22 @@ def checkpiece(piecetype,xcoord1,ycoord1,xcoord2,ycoord2,piece):
                         elif int(xdif) == 1 or int(xdif) == -1:
                             return True
                     if orderlist[piecetype] == rooklist:
-                        if i <=6:
-                            print(1)
-                            return True
-                        elif i > 7 and i<=13:
-                            print(2)
-                            return True
-                        elif i > 13 and i<=20:
-                            print(3)
-                            return True
-                        elif i >20:
-                            print(4)
-                            return True
+                        for index,key in enumerate(turtledict.items()):
+                            if i <=6: #right
+                                for i in range(int(xdif)):
+                                    print(key[1])
+                                    if f"{int(xcoord2) + i*40},{int(ycoord2)}" == key[1]:
+                                        print("dont do that")
+                                return True
+                            elif i > 7 and i<=13: #left
+                                print(2)
+                                return True
+                            elif i > 13 and i<=20: #up
+                                print(3)
+                                return True
+                            elif i >20: #down
+                                print(4)
+                                return True
 
                     else:
                         return True
