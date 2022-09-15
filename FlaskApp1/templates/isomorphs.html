@@ -1,0 +1,42 @@
+ {% extends "layout.html" %}
+
+    {% block content %}
+
+    <div class="row">
+        <div class="col-md-6 offset-md-3">
+            <h3></h3>
+            <form name="login" action="" method="post" novalidate>
+                <fieldset class="form-group">
+                    <legend>{{title}}</legend>
+                    This page checks whether two words are isomorphic pairs.
+                {{ form.hidden_tag() }}
+                <p>
+                    {{ form.string1.label }} <br>
+                    {{ form.string1(size = 100) }}
+                    {% for error in form.string1.errors %}
+                        <span class="error-message">{{ error }}</span>
+                    {% endfor %}
+                </p>
+                    <p>
+                    {{ form.string2.label }} <br>
+                    {{ form.string2(size = 100) }}
+                    {% for error in form.string2.errors %}
+                        <span class="error-message">{{ error }}</span>
+                    {% endfor %}
+                    </p>
+                <p>
+                    {{ form.submit(class_="btn btn-white btn-animate") }}
+
+
+                </p>
+
+                    <p>
+                        {% if result %}
+                        {{ result }}
+                        {% endif %}
+                    </p>
+                    </fieldset>
+            </form>
+        </div>
+    </div>
+ {% endblock %}

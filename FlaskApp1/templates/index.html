@@ -2,12 +2,19 @@
     {% block content %}
     <div class="row">
         <div class="col-md-12 text-center">
-            <h1>Welcome to St Paul's School Programming Academy.</h1>
-            {% if login %}
+            <h1>Welcome to Lucas' Super Fun Awesome Page</h1>
+            {% if session['user_id'] %}
             <h3>Let's get started.</h3>
             {% else %}
-            <p>Already registered? <a href="{{ url_for('login') }}">Login</a></p>
             {% endif %}
+            <div style="text-align-left;">
+                <br><br>
+                <div class="text-box">
+    <a href="#" class="btn btn-white btn-animate"><img alt="A Header bar image of a lizard" src="{{ url_for('static',filename='images/lizard.png') }}"></a>
+</div>
+               <div class="section1"> <img alt="People loving lie" src="{{ url_for('static',filename='images/fun.jpg') }}"> </div>
+
+            </div>
             </div>
     </div>
 </div>

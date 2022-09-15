@@ -1,0 +1,52 @@
+{% extends "layout.html" %}
+   
+    {% block content %}
+
+    <div class="row">
+        <div class="col-md-6 offset-md-3">
+            <h3></h3>
+            <form name="login" action="" method="post" novalidate>
+                <fieldset class="form-group">
+                    <legend>{{title}}</legend>
+                {{ form.hidden_tag() }}
+                <p>
+                    {{ form.word.label }} <br>
+                    {{ form.word(size = 100) }}
+                    {% for error in form.word.errors %}
+                        <span class="error-message">{{ error }}</span>
+                    {% endfor %}
+
+                </p>
+                <p>
+                    {{ form.submit() }}
+
+
+                </p>
+
+                    <p>
+                        {% if word %}
+                            <table class = "table table-hover">
+        <thead>
+        <tr>
+            <th scope = "col">Letter</th>
+            <th scope = "col">Count</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for key, val in dict.items() %}
+        <tr>
+            <td scope = 'row'>{{ key }}</td>
+            <td>{{ val }}</td>
+        </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+                    The total number of letters in the word was {{ wlen }} <br>
+                    The total number of unique letters was {{ dlen }}
+                        {% endif %}
+                    </p>
+                    </fieldset>
+            </form>
+        </div>
+    </div>
+ {% endblock %}

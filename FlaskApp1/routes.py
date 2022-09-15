@@ -1,7 +1,14 @@
 from FlaskApp1 import app
 from flask import render_template, request
+from FlaskApp1.cutcut import cutgame
+from FlaskApp1.Romannumerals import RomanNumerals
+from FlaskApp1.isomorphicpairs import isomorphise
+from FlaskApp1.forms import RomanForm, PSRLSForm, IsomorphForm
 
 
+
+
+###################
 @app.route("/")
 @app.route("/index")
 @app.route("/home")
@@ -9,35 +16,65 @@ def index():
     # return "<h1>Hello Everyone!!</h>"
     return render_template("index.html", login=False, index=True)
 
+# @app.route("/api/")
+# @app.route("/api/<idx>")
+# def api(idx = None):
+#     if (idx == None):
+#         jdata = coursesData
+#     else:
+#         jdata = coursesData[int(idx)]
+#     return Response(json.dumps(jdata), mimetype="FlaskApp1/json")
 
-@app.route("/login")
-def login():
-    return render_template("login.html", login=True)
+@app.route("/romannumerals", methods=['GET', 'POST'])
+def roman():
+    number = ""
+    numeral = ""
+    form = RomanForm()
+    if form.validate_on_submit():
+        number = int(request.form.get("roman"))
+        if 1 <= number <= 3999:
+            numeral = RomanNumerals(number)
+        else:
+            number = ""
+    return render_template("romannumerals.html", romannumerals=True, form=form, title="Roman Numerals", number=number,
+                           numeral=numeral)
 
+@app.route("/cutrock", methods=['GET', 'POST'])
+def cutrock():
+    form = PSRLSForm()
+    answer = ""
+    result = ""
+    if form.paper.data:
+        answer = "paper"
+        result = cutgame("paper")
+    if form.scissors.data:
+        answer = "scissors"
+        result = cutgame("scissors")
+    if form.rock.data:
+        answer = "rock"
+        result = cutgame("rock")
+    if form.lizard.data:
+        answer = "lizard"
+        result = cutgame("lizard")
+    if form.spock.data:
+        answer = "spock"
+        result = cutgame("spock")
 
-@app.route("/courses")
-@app.route("/courses/<year>")
-def courses(year="Spring 2022"):
-    coursesData = [
-        {"courseID": "1111", "title": "PHP 101", "description": "Intro to PHP", "credits": 3, "term": "Fall, Spring"},
-        {"courseID": "2222", "title": "Java 1", "description": "Intro to Java Programming", "credits": 4,
-         "term": "Spring"},
-        {"courseID": "3333", "title": "Adv PHP 201", "description": "Advanced PHP Programming", "credits": 3,
-         "term": "Fall"}, {"courseID": "4444", "title": "Angular 1", "description": "Intro to Angular", "credits": 3,
-                           "term": "Fall, Spring"},
-        {"courseID": "5555", "title": "Java 2", "description": "Advanced Java Programming", "credits": 4,
-         "term": "Fall"}]
-    return render_template("courses.html", courseData=coursesData, courses=True, year=year)
+    return render_template("cutrock.html", cutrock=True, form=form, answer=answer, result=result, title="Paper Scissors Rock Lizard Spock")
 
+@app.route("/isomorph", methods=['GET', 'POST'])
+def isomorph():
+    form = IsomorphForm()
+    result = ""
+    if form.validate_on_submit():
+        string1 = isomorphise(request.form.get("string1").lower())
+        string2 = isomorphise(request.form.get("string2").lower())
+        if string1 == string2:
+            result = f"{request.form.get('string1')} and {request.form.get('string2')} are isomorphic pairs with the pattern {string1}."
+        elif len(request.form.get("string1")) != len(request.form.get("string2")):
+            result = f"{request.form.get('string1')} and {request.form.get('string2')} are not the same length, and therefore are not isomoprhic pairs."
+        else:
+            result = f"{request.form.get('string1')} and {request.form.get('string2')} are not isomorphic pairs."
+    return render_template("isomorphs.html", isomorphs=True, form=form, result=result, title="Isomorphic Pairs")
 
-@app.route("/register")
-def register():
-    return render_template("register.html", register=True)
-
-@app.route("/enrolment", methods=["GET","POST"])
-def enrolment():
-    id = request.form.get("courseID")
-    title = request.form.get("title")
-    term = request.form.get("term")
-    return render_template("enrolment.html", enrolment=True, data= {"id":id,"title":title,"term":term})
 

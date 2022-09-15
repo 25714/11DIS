@@ -2,9 +2,10 @@
   <nav>
     <ul class = "nav nav-pills">
       <li class = "nav-item"></li><a href="{{ url_for('index') }}" class="nav-link {% if index %} active {% endif %}">Home</a></li>
-      <li class = "nav-item"></li><a href="{{ url_for('register') }}" class="nav-link {% if register %} active {% endif %}">Register</a></li>
-      <li class = "nav-item"></li><a href="{{ url_for('login') }}" class="nav-link {% if login %} active {% endif %}">Login</a></li>
-      <li class = "nav-item"></li><a href="{{ url_for('courses') }}" class="nav-link {% if courses %} active {% endif %}">Courses</a></li>
+      <li class = "nav-item"></li><a href="{{ url_for('roman') }}" class="nav-link {% if romannumerals %} active {% endif %}">Roman Numerals</a></li>
+      <li class = "nav-item"></li><a href="{{ url_for('cutrock') }}" class="nav-link {% if cutrock %} active {% endif %}">PSRLS</a></li>
+      <li class = "nav-item"></li><a href="{{ url_for('isomorph') }}" class="nav-link {% if isomorphs %} active {% endif %}">Isomorphic Pairs</a></li>
+
     </ul>
   </nav>
   <hr style="clear:both">

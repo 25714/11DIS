@@ -1,0 +1,40 @@
+    {% extends "layout.html" %}
+    {% block content %}
+
+    <h1>{% block title %} Posts {% endblock %}</h1>
+    {% for post in posts %}
+        <div class='post'>
+            <p>{{ post['created'] }}</p>
+            <h2>{{ post['title'] }}</h2>
+            <p>{{ post['content'] }}</p>
+            <a href="{{ url_for('edit', id=post['id']) }}">Edit</a>
+        </div>
+    {% endfor %}
+    <div class="row">
+        <div class="col-md-12 text-center">
+            <h1>Welcome to St Paul's School Programming Academy.</h1>
+            {% if session['user_id'] %}
+            <h3>Let's get started.</h3>
+            {% else %}
+            <p>Already registered? <a href="{{ url_for('login') }}">Login</a></p>
+            {% endif %}
+            <div style="text-align-left;">
+                <br><br>
+                <p>If your child has COVID-19 or is a Close Contact, you can register their absence from School via Parent Lounge.  For students who have been directed to isolate or quarantine by Queensland Health and wish to continue learning, information about alternative learning arrangements can be found here.</p>
+            <p>St Paul’s is a Pre-Prep to Year 12 co-educational Anglican school. We seek to prepare resilient global citizens who are innovative thinkers, with a heart for servant leadership.</p>
+            <p>St Paul’s has prototyped, revised and rolled out a unique student wellbeing program called Ways of Being. Central to Ways of Being is the St Paul’s Character Framework, comprising ten virtues which all members of the community are encouraged to demonstrate. Students are encouraged to attain awards within our Global Citizenship program. Criteria for these awards include academic progress; sport and other extra-curricular activities; creative activities and outdoor education.</p>
+            <p>St Paul’s has pioneered a unique approach to learning called: Realms of Thinking which help students master the basics while also growing their capacity to ask better questions, navigate challenges, develop empathy and spark their imagination.</p>
+            <p>We are excited to introduce the Accelerating Change podcast – a conversation about the future hosted by our Headmaster, Dr Paul Browning.
+
+<br>Over the past few months, Paul has been interviewing special guests to explore their perspective on how the world is changing and what is causing these advances in technology, employment and socioeconomics to occur at an accelerated rate.
+
+<br>Don’t miss the release of the first episode Saturday, 31 July by subscribing to the podcast on the Accelerating Change website.</p>
+            <p>Students at St Paul’s receive an education worth having, which prepares resilient global citizens who are innovative thinkers, with a heart for servant leadership.</p>
+            </div>
+            </div>
+    </div>
+</div>
+    {% endblock %}
+{% include "includes/footer.html" %}
+</body>
+</html>

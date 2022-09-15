@@ -182,11 +182,4 @@ def calculator(equation):
     return f"{equation} = {n}"
 
 
-running = True
-while running:
-    print(calculator(input("Input an equation to calculate ")))
-
-    if input("Would you like to run the calculator again? (Y/N) ").lower() != "y":
-        running = False
-
 # How im going to do the brackets. If "()" Make a new string and that string gets immediate priority. and it will be epic, but idk how to do this for more importsnt

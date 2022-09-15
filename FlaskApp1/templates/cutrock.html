@@ -1,0 +1,82 @@
+{% extends "layout.html" %}
+
+    {% block content %}
+
+    <div class="row">
+        <div class="col-md-6 offset-md-3">
+            <h3></h3>
+            <form name="login" action="" method="post" novalidate>
+                    <legend>{{title}}</legend>
+                        <div class="infodump"> <h4> The game rules are as follows. </h4><p>
+                        <h6>
+                        -Paper beats Rock and Spock <br>
+                        -Scissors beats Paper and Lizard<br>
+                        -Rock beats Scissors and Lizard<br>
+                        -Lizard beats Spock and Paper<br>
+                        -Spock beats Rock and Scissors<br> <br>
+                            {% if not answer %}
+                                <b>Please Click On Your Weapon of Choice</b>
+                            {% else %}
+                                <b> You Have Chosen...</b>
+                            {% endif %}
+
+                            </h6>
+                            </p>
+                        </div>
+                        <div class="infodump"> <img class="smaller" alt="A diagram depicting the winning conditions for each choice in PSRLS" src="{{ url_for('static',filename='images/PSRLS.jpg') }}"></div>
+                        {% if not answer %}
+                            <div class="section1">{{ form.paper(class_='btn btn-white btn-animate paper')}}</div>
+
+                            <div class="section2">{{ form.scissors(class_='btn btn-white btn-animate scissors')}}</div>
+
+                            <div class="section3">{{ form.rock(class_='btn btn-white btn-animate rock')}}</div>
+
+                            <div class="section4">{{ form.lizard(class_='btn btn-white btn-animate lizard')}}</div>
+
+                            <div class="section5">{{ form.spock(class_='btn btn-white btn-animate spock')}}</div>
+                        {% else %}
+                    <div class="end1"><h6>You have decided to use: {{ answer.upper() }}</h6>
+                {% if answer == "paper" %}
+                <img class="smaller" alt="A picture of a hand paper" src="{{ url_for('static',filename='images/paper.png') }}">
+                {% endif %}
+                {% if answer == "scissors" %}
+                <img class="smaller" alt="A picture of a hand scissors" src="{{ url_for('static',filename='images/scissors.png') }}">
+                {% endif %}
+                {% if answer == "rock" %}
+                <img class="smaller" alt="A picture of a hand rock" src="{{ url_for('static',filename='images/rock.png') }}">
+                {% endif %}
+                {% if answer == "lizard" %}
+                <img class="smaller" alt="A picture of a hand lizard" src="{{ url_for('static',filename='images/lizard.png') }}">
+                {% endif %}
+                {% if answer == "spock" %}
+                <img class="smaller" alt="A picture of a hand spock" src="{{ url_for('static',filename='images/spock.png') }}">
+                {% endif %}    </div>
+                        <div class="end2"><h6>The AI has decided to use: {{ result[1].upper() }}</h6>
+                {% if result[1] == "Paper" %}
+                <img class="smaller" alt="A picture of a hand paper" src="{{ url_for('static',filename='images/paper.png') }}">
+                {% endif %}
+                {% if result[1] == "Scissors" %}
+                <img class="smaller" alt="A picture of a hand scissors" src="{{ url_for('static',filename='images/scissors.png') }}">
+                {% endif %}
+                {% if result[1] == "Rock" %}
+                <img class="smaller" alt="A picture of a hand rock" src="{{ url_for('static',filename='images/rock.png') }}">
+                {% endif %}
+                {% if result[1] == "Lizard" %}
+                <img class="smaller" alt="A picture of a hand lizard" src="{{ url_for('static',filename='images/lizard.png') }}">
+                {% endif %}
+                {% if result[1] == "Spock" %}
+                <img class="smaller" alt="A picture of a hand spock" src="{{ url_for('static',filename='images/spock.png') }}">
+                {% endif %}
+                            </div>
+                            {% if result %}
+                            <div class="section1">
+                            <h3>{{result[0]}}</h3> <br>
+                            {{form.reset(class_='reset-button btn btn-white btn-animate')}}
+                            </div>
+                            {% endif %}
+                {% endif %}
+                    </fieldset>
+            </form>
+        </div>
+    </div>
+ {% endblock %}
