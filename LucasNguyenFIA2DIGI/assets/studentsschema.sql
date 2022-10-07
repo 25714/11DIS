@@ -1,0 +1,15 @@
+DROP TABLE IF EXISTS Students;
+
+CREATE TABLE Students (
+
+StudentId INTEGER PRIMARY KEY,
+
+Name TEXT NOT NULL,
+
+Password TEXT NOT NULL,
+
+YearLevel INTEGER NOT NULL,
+
+TutorCode TEXT NOT NULL
+
+)

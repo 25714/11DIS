@@ -1,0 +1,17 @@
+DROP TABLE IF EXISTS Staff;
+
+CREATE TABLE Staff (
+
+StaffId TEXT PRIMARY KEY NOT NULL,
+
+TutorCode TEXT,
+
+StaffName TEXT NOT NULL,
+
+Username TEXT NOT NULL,
+
+Password TEXT NOT NULL,
+
+HouseLeader INTEGER NOT NULL
+
+)

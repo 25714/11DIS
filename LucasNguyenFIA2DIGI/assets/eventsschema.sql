@@ -1,0 +1,27 @@
+DROP TABLE IF EXISTS Events;
+
+CREATE TABLE Events (
+
+EventId INTEGER PRIMARY KEY AUTOINCREMENT,
+
+StudentId INTEGER NOT NULL,
+
+SetBy INTEGER NOT NULL,
+
+ConfirmedBy TEXT,
+
+Details TEXT NOT NULL,
+
+ImageProof TEXT NOT NULL,
+
+HousePoints INTEGER NOT NULL,
+
+EventDate DATE NOT NULL,
+
+FOREIGN KEY (StudentId) REFERENCES Students(StudentId),
+
+FOREIGN KEY (SetBy) REFERENCES Staff(StaffId),
+
+FOREIGN KEY (ConfirmedBy) REFERENCES Staff(StaffId)
+
+)
