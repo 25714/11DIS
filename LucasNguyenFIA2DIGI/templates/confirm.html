@@ -1,0 +1,42 @@
+    {% extends "layout.html" %}
+    {% block content %}
+    <h1>{% block title %}  {% endblock %}</h1>
+    <p>
+    {% if session['id'] %}
+    <a class="user">Logged in as: {{ session['name'] }}</a>
+    {% endif %}
+        <form name="confirm" action="" method="post" novalidate>
+
+        <fieldset class="form-group">
+             <table class = "table table-hover table-striped">
+        <thead>
+        <tr>
+            {% for i in range(nameList|length) %}
+            <th><h3>{{nameList[i]}}</h3></th>
+            {% endfor %}
+        </tr>
+        </thead>
+        <tbody>
+        {% for event in events %}
+        <tr>
+            {% for i in range(event|length) %}
+            <td>{{event[i]}}</td>
+        {% endfor %}
+            <td><a href="{{ url_for('accept', eventid=event['eventid']) }}">Confirm</a></td>
+            <td><a href="{{ url_for('delete', eventid=event['eventid']) }}">Deny</a></td>
+        {% endfor %}
+        </tr>
+        </tbody>
+    </table>
+
+        </div>
+            </fieldset>
+        </form>
+    </p>
+
+
+    </div>
+</div>
+    {% endblock %}
+</body>
+</html>

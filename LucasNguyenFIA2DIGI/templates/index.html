@@ -2,7 +2,11 @@
     {% block content %}
     <h1>{% block title %}  {% endblock %}</h1>
     <p>
+    {% if session['id'] %}
+    <a class="user">Logged in as: {{ session['name'] }}</a>
+    {% endif %}
         <form name="leaderboard" action="" method="post" novalidate>
+
         <fieldset class="form-group">
         {{ form.hidden_tag()}}
         {{ form.csrf_token }}
@@ -15,13 +19,13 @@
 
                     {{ form.house.label }}
                     {{ form.house(size = 1) }}
-                    {% for error in form.display.errors %}
+                    {% for error in form.house.errors %}
                         <span class="error-message">{{ error }}</span>
                     {% endfor %}
 
                     {{ form.tutor.label }}
                     {{ form.tutor(size = 1) }}
-                    {% for error in form.display.errors %}
+                    {% for error in form.tutor.errors %}
                         <span class="error-message">{{ error }}</span>
                     {% endfor %}
 
@@ -59,10 +63,10 @@
                     {% for error in form.reset.errors %}
                         <span class="error-message">{{ error }}</span>
                     {% endfor %}
-            </fieldset class="form-group">
+            </fieldset>
         </form>
     </p>
-    <table class = "table table-hover">
+    <table class = "table table-hover table-striped">
         <thead>
         <tr>
             {% for i in range(nameList|length) %}
@@ -80,12 +84,9 @@
         </tr>
         </tbody>
     </table>
-    <div class="row">
-        <div class="col-md-12 text-center">
 
     </div>
 </div>
     {% endblock %}
-{% include "includes/footer.html" %}
 </body>
 </html>

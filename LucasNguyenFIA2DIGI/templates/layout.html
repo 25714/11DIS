@@ -1,22 +1,19 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>SPS - Home Page</title>
+    <title>SPS - House Points</title>
+    <div class="fixed-header">
+        <img alt="An Header bar image of the St Pauls Logo" src="{{ url_for('static',filename='images/inline-file.cfm') }}">
+    </div>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
           integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
     <link rel="stylesheet" href="{{ url_for('static',filename='css/main.css') }}"/>
 </head>
 <body>
-<div class="page-container">
-<div id="content-wrap">
-<div class="container-fluid text-center top-container">
-    <img alt="An Header bar image of the St Pauls Logo" src="{{ url_for('static',filename='images/sps-logo-200.png') }}">
-    {% if session['user_id'] %}
-    <span class="user">Welcome, {{ session['username'] }}</span>
-    {% endif %}
-</div>
-<div class="container">
+
+
     {% include "includes/nav.html" %}
+    <div class="layoutcontainer">
     {% with messages = get_flashed_messages(with_categories=true) %}
 
         {% if messages %}
@@ -31,8 +28,6 @@
     {% block content %}
     {% endblock %}
 </div>
-</div>
-    </div>
     {% include "includes/footer.html" %}
 
 </body>

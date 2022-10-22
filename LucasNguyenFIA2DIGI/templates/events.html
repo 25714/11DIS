@@ -1,0 +1,55 @@
+    {% extends "layout.html" %}
+    {% block content %}
+    <h1>{% block title %}  {% endblock %}</h1>
+    <p>
+    {% if session['id'] %}
+    <span class="user">Showing events for: {{ session['name'] }}</span>
+    {% endif %}
+    {% if session['staff'] > 0%}
+    <form name="events" action="" method="post" novalidate>
+     <fieldset class="form-group login">
+                    <legend><h1>{{title}}</h1></legend>
+                <br>
+                {{ form.hidden_tag() }}
+                {{ form.csrf_token }}
+                <p>
+                    {{ form.student.label }}
+                    {{ form.student(size=6) }}
+                    {% for error in form.student.errors %}
+                        <span class="error-message">{{ error }}</span>
+                    {% endfor %}
+                    {{ form.submit() }}
+                    {% for error in form.submit.errors %}
+                        <span class="error-message">{{ error }}</span>
+                    {% endfor %}
+                </p>
+        </fieldset>
+    </form>
+    {% endif %}
+    <table class = "table table-hover">
+        <thead>
+        <tr>
+            {% for i in range(eventsList|length) %}
+            <th><h3>{{eventsList[i]}}</h3></th>
+            {% endfor %}
+        </tr>
+        </thead>
+        <tbody>
+        <h7>
+        {% for area in eventsdata %}
+        <tr>
+            <tr>
+            {% for i in range(area|length) %}
+            <td>{{area[i]}}</td>
+        {% endfor %}
+        {% endfor %}
+        </tr>
+        </tbody>
+    </table>
+</h7>
+    </div>
+</div>
+    {% endblock %}
+{% include "includes/footer.html" %}
+</body>
+</html>

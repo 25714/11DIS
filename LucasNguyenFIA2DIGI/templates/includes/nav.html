@@ -1,14 +1,24 @@
 <header>
   <nav>
-    <ul class = "nav nav-pills">
-      <li class = "nav-item"></li><a href="{{ url_for('index') }}" class="nav-link {% if index %} active {% endif %}">Home</a></li>
-      <li class = "nav-item"></li><a href="{{ url_for('login') }}" class="nav-link {% if login %} active {% endif %}">Login</a></li>
-      <li class = "nav-item"></li><a href="{{ url_for('register') }}" class="nav-link {% if register %} active {% endif %}">Register</a></li>
-      <li class = "nav-item"></li><a href="{{ url_for('logout') }}" class="nav-link {% if logout %} active {% endif %}">Logout</a></li>
+    <ul class = "nav nav-block">
 
+      {% if session['id'] %}
+      <a href="{{ url_for('index') }}" class="nav-link {% if index %} active {% endif %}">Home</a>
+      <a href="{{ url_for('events') }}" class="nav-link {% if event %} active {% endif %}">Events</a>
+      {% if session['staff'] >= 0 %}
+      <a href="{{ url_for('create') }}" class="nav-link {% if create %} active {% endif %}">Create</a>
+          {% if session['staff'] >= 2%}
+            <a href="{{ url_for('confirm') }}" class="nav-link {% if confirm %} active {% endif %}">Confirm</a>
+        {% endif %}
+      {% endif %}
+      <a href="{{ url_for('logout') }}" class="nav-link {% if logout %} active {% endif %}">Logout</a>
+
+      {% else %}
+      <a href="{{ url_for('index') }}" class="nav-link {% if index %} active {% endif %}">Home</a>
+      <a href="{{ url_for('login') }}" class="nav-link {% if login %} active {% endif %}">Login</a>
+      {% endif %}
     </ul>
   </nav>
-  <hr style="clear:both">
 </header>
 
 

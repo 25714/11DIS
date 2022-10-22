@@ -181,7 +181,7 @@ def register():
         conn.close()
         flash(f"{first_name}, you are successfully registered!", "success")
         return redirect(url_for('index'))
-    return render_template("register.html", title="Register", register=True, form=form)
+    return render_template("login.html", title="Register", register=True, form=form)
 
 
 @app.route("/enrolment", methods=["GET", "POST"])

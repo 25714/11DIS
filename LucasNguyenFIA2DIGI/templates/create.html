@@ -1,0 +1,62 @@
+    {% extends "layout.html" %}
+    {% block content %}
+    <h1>{% block title %}  {% endblock %}</h1>
+    <p>
+    {% if session['id'] %}
+    <a class="user">Logged in as: {{ session['name'] }}</a>
+    {% endif %}
+        <form name="create" action="" method="post" novalidate>
+
+        <fieldset class="form-group">
+        {{ form.hidden_tag()}}
+        {{ form.csrf_token }}
+<!--            students = TextAreaField("List every participating student on a new line")
+    details = StringField("Details")
+    imageproof = StringField("Please provide a onedrive link of image proof")
+    housepoints = IntegerField("House Points for activity")
+    date = DateField("When was this activity Performed?", default=date.today())
+-->                 <p>
+                    {{ form.students.label }} <br>
+                    {{ form.students(size=50) }}
+                    {% for error in form.students.errors %}
+                        <span class="error-message">{{ error }}</span>
+                    {% endfor %}
+                    </p>
+                    {{ form.details.label }}<br>
+                    {{ form.details(size=30) }}
+                    {% for error in form.details.errors %}
+                        <span class="error-message">{{ error }}</span>
+                    {% endfor %}
+                    <p>
+                    {{ form.imageproof.label }}<br>
+                    {{ form.imageproof(size=30) }}
+                    {% for error in form.imageproof.errors %}
+                        <span class="error-message">{{ error }}</span>
+                    {% endfor %}
+                    </p>
+                    <p>
+                    {{ form.housepoints.label }}<br>
+                    {{ form.housepoints() }}
+                    {% for error in form.housepoints.errors %}
+                        <span class="error-message">{{ error }}</span>
+                    {% endfor %}
+                    </p>
+                    <p>
+                    {{ form.date.label }}<br>
+                    {{ form.date() }}
+                    {% for error in form.date.errors %}
+                        <span class="error-message">{{ error }}</span>
+                    {% endfor %}
+                    </p>
+                    {{ form.submit() }}
+                    {% for error in form.submit.errors %}
+                        <span class="error-message">{{ error }}</span>
+                    {% endfor %}
+            </fieldset>
+        </form>
+    </p>
+    </div>
+</div>
+    {% endblock %}
+</body>
+</html>
