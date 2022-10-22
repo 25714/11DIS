@@ -1,26 +1,35 @@
-from FIApp1 import app
+from LucasNguyenFIA2DIGI import app
 from flask import request, redirect, url_for, flash, session
-from FIApp1.models import User
-from FIApp1.forms import LoginForm, RegisterForm, CalculatorForm, ScoreForm, WordForm, HangmanForm, RomanForm
-from FIApp1.calculator import calculator
-from FIApp1.hangman import string_writer
-from FIApp1.Romannumerals import RomanNumerals
+from LucasNguyenFIA2DIGI.forms import LoginForm, RegisterForm, FilterForm
 import sqlite3
 from flask import render_template, abort
 
+
 def get_db_connection():
-    conn = sqlite3.connect(r'/LucasNguyenFIA2DIGI/database.db')
+    conn = sqlite3.connect(r'C:\Program Files\SQLiteStudio\SchoolTestDB')
     conn.row_factory = sqlite3.Row
     return conn
 
-def get_post(post_id):
+
+def filter_points(parameterList=None):
+    if parameterList is None:
+        parameterList = ['2019-01-01', '2024-01-01', "NOT NULL", "NOT NULL", "SUBSTR(s.tutorcode,1,10)", "SUM(e.Housepoints)", "Desc", "s.Name StudentName, SUBSTR(s.tutorCode,1,10) Tutor, SUM(e.Housepoints) Points FROM Students s"]
     conn = get_db_connection()
-    post = conn.execute('SELECT * FROM posts WHERE id = ?',
-                        (post_id,)).fetchone()
+    Date1 = parameterList[0]
+    Date2 = parameterList[1]
+    HouseCode = parameterList[2]
+    TutorCode = parameterList[3]
+    GroupBy = parameterList[4]
+    OrderBy = parameterList[5]
+    OrderType = parameterList[6]
+    Select = parameterList[7]
+    NameList = ["House", "Tutor", "Points"]
+    leaderboard = conn.execute(f"SELECT {Select}, Events e WHERE SUBSTR(s.TutorCode,2,10) IS {TutorCode} AND e.Date BETWEEN '2019-01-01' AND '2024-01-01' AND e.StudentId = s.StudentId AND SUBSTR(s.TutorCode,1,1) IS {HouseCode} GROUP BY {GroupBy} Order BY {OrderBy} {OrderType}",
+                               ()).fetchall()
     conn.close()
-    if post is None:
+    if leaderboard is None:
         abort(404)
-    return post
+    return leaderboard, NameList
 
 
 ###################
@@ -57,69 +66,35 @@ def get_post(post_id):
 #         return jsonify(f"User {idx} is deleted")
 
 ###################
-@app.route("/")
-@app.route("/index")
-@app.route("/home")
+@app.route("/", methods=['GET', 'POST'])
+@app.route("/index", methods=['GET', 'POST'])
+@app.route("/home", methods=['GET', 'POST'])
 def index():
     # return "<h1>Hello Everyone!!</h>"
-    conn = get_db_connection()
-    posts = conn.execute('SELECT * FROM posts').fetchall()
-    conn.close()
-    return render_template("index.html", login=False, index=True, posts=posts)
-
-@app.route('/create/', methods=('GET', 'POST'))
-def create():
-    if request.method == 'POST':
-        title = request.form['title']
-        content = request.form['content']
-
-        if not title:
-            flash('Title is required!')
-        elif not content:
-            flash('Content is required!')
-        else:
-            conn = get_db_connection()
-            conn.execute('INSERT INTO posts (title, content) VALUES (?, ?)',
-                         (title, content))
-            conn.commit()
-            conn.close()
-            return redirect(url_for('index'))
-    return render_template('create.html', create=True, title="Create Post")
-
-
-@app.route('/<int:id>/edit/', methods=('GET', 'POST'))
-def edit(id):
-    post = get_post(id)
-
-    if request.method == 'POST':
-        title = request.form['title']
-        content = request.form['content']
-
-        if not title:
-            flash('Title is required!')
-
-        elif not content:
-            flash('Content is required!')
-
-        else:
-            conn = get_db_connection()
-            conn.execute('UPDATE posts SET title = ?, content = ?'
-                         ' WHERE id = ?',
-                         (title, content, id))
-            conn.commit()
-            conn.close()
-            return redirect(url_for('index'))
-
-    return render_template('edit.html', post=post)
-
-@app.route('/<int:id>/delete/', methods=('POST',))
-def delete(id):
-    conn = get_db_connection()
-    conn.execute('DELETE FROM users WHERE user_id = ?', (id,))
-    conn.commit()
-    conn.close()
-    flash(f' user {id} was successfully deleted!')
-    return redirect(url_for('index'))
+    # Date1 = parameterList[0]
+    # Date2 = parameterList[1]
+    # HouseCode = parameterList[2]
+    # TutorCode = parameterList[3]
+    # GroupBy = parameterList[4]
+    # OrderBy = parameterList[5]
+    # OrderType = parameterList[6]
+    # Select = parameterList[7]
+    form = FilterForm()
+    if form.validate_on_submit():
+        if form.reset.data:
+            return(redirect('/index'))
+        date1 = form.date1.data
+        date2 = form.date2.data
+        houseCode = form.house.data
+        tutorCode = form.tutor.data
+        groupBy = form.display.data
+        orderBy = form.order.data
+        conn = get_db_connection()
+        conn.close()
+        leaderboard = filter_points([date1,date2,houseCode,tutorCode,groupBy, "SUM(e.Housepoints)", orderBy,"s.Name StudentName, SUBSTR(s.tutorCode,1,10) Tutor, SUM(e.Housepoints) Points FROM Students s"])
+    else:
+        leaderboard = filter_points(None)
+    return render_template("index.html", login=False, index=True, leaderboard=leaderboard[0], nameList=leaderboard[1], form=form)
 
 
 @app.route("/login", methods=['GET', 'POST'])
@@ -132,7 +107,7 @@ def login():
         email = form.email.data
         password = form.password.data
         conn = get_db_connection()
-        user = conn.execute('SELECT * FROM users WHERE email = ?', (email, )).fetchone()
+        user = conn.execute('SELECT * FROM users WHERE email = ?', (email,)).fetchone()
         conn.close()
         if user and user['password'] == password:
             flash(f"{user['first_name']}, you are successfully logged in!", "success")
@@ -151,17 +126,6 @@ def logout():
     return redirect(url_for('index'))
 
 
-@app.route("/courses")
-@app.route("/courses/<year>")
-def courses(term=None):
-    if term is None:
-        term = "Spring 2022"
-    conn = get_db_connection()
-    coursesData = conn.execute('SELECT * FROM courses').fetchall()
-    conn.close()
-    return render_template("courses.html", courseData=coursesData, courses=True, year=term)
-
-
 @app.route("/register", methods=['GET', 'POST'])
 def register():
     if session.get('user_id'):
@@ -175,40 +139,14 @@ def register():
         last_name = form.last_name.data
         conn = get_db_connection()
         conn.execute("INSERT INTO users (first_name, last_name, email, password) VALUES (?,?,?,?)",
-            (first_name , last_name, email, password)
-                )
+                     (first_name, last_name, email, password)
+                     )
         conn.commit()
         conn.close()
         flash(f"{first_name}, you are successfully registered!", "success")
         return redirect(url_for('index'))
     return render_template("register.html", title="Register", register=True, form=form)
 
-
-@app.route("/enrolment", methods=["GET", "POST"])
-def enrolment():
-    if not session.get('user_id'):
-        flash("You need to log in to access this page.", "danger")
-        return redirect(url_for('login'))
-    courseID = request.form.get("courseID")
-    user_id = session.get('user_id')
-    if courseID:
-        if request.method == 'POST':
-            user_id = session.get('user_id')
-            course_id = request.form.get("courseID")
-            conn = get_db_connection()
-            conn.execute("INSERT INTO enrolment (course_id,user_id) VALUES (?,?)",
-                (course_id, user_id)
-                )
-            conn.commit()
-            conn.close()
-
-    conn = get_db_connection()
-    classes = conn.execute('SELECT c.course_id, c.title, c.description, c.credits, c.term FROM enrolment AS e INNER JOIN courses as c ON e.course_id = c.course_id WHERE user_id = ?', (user_id, )).fetchall()
-    conn.close()
-    return render_template("enrolment.html", enrolment=True, title="Enrolment", classes=classes)
-
-
-# @app.route("/api/")
 # @app.route("/api/<idx>")
 # def api(idx = None):
 #     if (idx == None):
