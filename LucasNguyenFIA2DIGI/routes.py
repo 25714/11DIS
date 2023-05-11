@@ -106,7 +106,7 @@ def login():
                 password = form.password.data
                 if email[0].isalpha(): #If staff
                     conn = get_db_connection()
-                    user=conn.execute('SELECT * FROM staff WHERE username = ?', (email.replace('@stpauls.qld.edu.au',''),)).fetchone()
+                    user = conn.execute('SELECT * FROM staff WHERE username = ?', (email.replace('@stpauls.qld.edu.au',''),)).fetchone()
                     conn.close()
                     if user and user['password'] == password: #staff login
                         flash(f"{user['staffname']}, you are successfully logged in!", "success")

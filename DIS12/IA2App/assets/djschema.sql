@@ -1,0 +1,9 @@
+DROP TABLE IF EXISTS djs;
+
+CREATE TABLE djs (
+    dj_id INTEGER PRIMARY KEY AUTOINCREMENT,
+    name TEXT NOT NULL,
+    type TEXT NOT NULL,
+    age TEXT NOT NULL,
+    description TEXT NOT NULL,
+);

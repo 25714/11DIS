@@ -1,3 +1,3 @@
 FLASK_ENV=development
-FLASK_APP=LucasNguyenFIA2DIGI
+FLASK_APP=DIS12.IA2App
 
