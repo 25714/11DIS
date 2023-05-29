@@ -2,8 +2,11 @@ DROP TABLE IF EXISTS djs;
 
 CREATE TABLE djs (
     dj_id INTEGER PRIMARY KEY AUTOINCREMENT,
+    email TEXT UNIQUE NOT NULL,
     name TEXT NOT NULL,
-    type TEXT NOT NULL,
+    genre TEXT NOT NULL,
     age TEXT NOT NULL,
     description TEXT NOT NULL,
+    price VARCHAR NOT NULL,
+    password VARCHAR NOT NULL
 );

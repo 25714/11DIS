@@ -1,37 +1,9 @@
-   {% extends "layout.html" %}
+  {% extends "layout.html" %}
    {% block content %}
    Hello! I am lucas. <br>
    I love chicken
-   <form name="login" action="" method="post" novalidate>
-   {{ form.hidden_tag() }}
-                <p>
-                    {{ form.album.label }} <br>
-                    {{ form.album(size = 35) }}
-                    {% for error in form.album.errors %}
-                        <span class="error-message">{{ error }}</span>
-                    {% endfor %}
-                    {{ form.submit() }}
-
-                    <br>
-                    <thead>
-                <th> album</th>
-                <th> Year </th>
-                     <tbody>
-                        {% for album in data %}
-                </p>
-
-                    <tr>
-                        <td scope = 'row'>{{ album["strAlbum"] }}</td>
-                        <td>{{ album["intYearReleased"] }}</td>
-                        <td>
-
-                        </td>
-                    </tr>
-                     </tbody>
-                        {% endfor %}
-
-       </form>
 
             <td>
    </td><form>
    {% endblock %}
+

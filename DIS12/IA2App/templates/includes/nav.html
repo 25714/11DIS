@@ -1,11 +1,32 @@
 <header>
   <nav>
-    <ul class = "nav nav-pills">
-      <li class = "nav-item"></li><a href="{{ url_for('index') }}" class="nav-link {% if index %} active {% endif %}">Home</a></li>
-      <li class = "nav-item"></li><a href="{{ url_for('songs') }}" class="nav-link {% if songs %} active {% endif %}">Songs</a></li>
-      <li>This is the nav!</li>
-      <li>This is the nav!</li>
-      <li>This is the nav!</li>
+    <ul class = "nav nav-pills sticky-top">
+
+
+      {% if session['username'] %}
+          <li class = "nav-item"></li><a href="{{ url_for('index') }}" class="nav-link {% if index %} active {% endif %}">Home</a></li>
+          <li class = "nav-item"></li><a href="{{ url_for('songs') }}" class="nav-link {% if songs %} active {% endif %}">Songs</a></li>
+          <li class = "nav-item"></li><a href="{{ url_for('friends') }}" class="nav-link {% if friends %} active {% endif %}">Friends</a></li>
+          <li class = "nav-item"></li><a href="{{ url_for('events') }}" class="nav-link {% if event %} active {% endif %}">Events</a></li>
+          <li class = "nav-item"></li><a href="{{ url_for('joined') }}" class="nav-link {% if joined %} active {% endif %}">Joined</a></li>
+          <li class = "nav-item"></li><a href="{{ url_for('host') }}" class="nav-link {% if host %} active {% endif %}">Hosting</a></li>
+          <li class = "nav-item"></li><a href="{{ url_for('create_event') }}" class="nav-link {% if create %} active {% endif %}">Create</a></li>
+          <li class = "nav-item"></li><a href="{{ url_for('djscloseevent') }}" class="nav-link {% if dj %} active {% endif %}">DJs</a></li>
+        <li class = "nav-item"></li><a href="{{ url_for('logout') }}" class="nav-link {% if logout %} active {% endif %}">Logout</a></li>
+          <li class = "nav-item"></li><a href="{{ url_for('friends') }}" class="nav-link {% if friends %} active {% endif %}">Friends</a></li>
+        <li class= "nav-item nav-link">Welcome, {{ session['username'] }}</li>
+        <li class= "nav-item nav-link   ">You are user no.{{ session['user'] }}</li>
+        {% elif session['djname'] %}
+            <li class = "nav-item"></li><a href="{{ url_for('logout') }}" class="nav-link {% if logout %} active {% endif %}">Logout</a></li>
+            <li class = "nav-item"></li><a href="{{ url_for('events') }}" class="nav-link {% if event %} active {% endif %}">Events</a></li>
+            <li class = "nav-item"></li><a href="{{ url_for('songs') }}" class="nav-link {% if songs %} active {% endif %}">Songs</a></li>
+            <li class = "nav-item"></li><a href="{{ url_for('history') }}" class="nav-link {% if history %} active {% endif %}">History</a></li>
+            <li class= "nav-item nav-link">Welcome, {{ session['djname'] }}</li>
+        {% else %}
+        <li class = "nav-item"></li><a href="{{ url_for('register') }}" class="nav-link {% if register %} active {% endif %}">Register</a></li>
+      <li class = "nav-item"></li><a href="{{ url_for('login') }}" class="nav-link {% if login %} active {% endif %}">Login</a></li>
+      {% endif %}
+
     </ul>
   </nav>
   <hr style="clear:both">

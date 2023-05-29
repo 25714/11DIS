@@ -6,7 +6,8 @@ CREATE TABLE events (
     private TEXT NOT NULL,
     details TEXT NOT NULL,
     host TEXT NOT NULL,
-    dj TEXT NOT NULL,
-    start-date DATE NOT NULL,
-    end_date DATE NOT NULL
+    dj VARCHAR,
+    date DATE NOT NULL,
+    start_time VARCHAR,
+    end_time VARCHAR
 );

@@ -5,55 +5,135 @@
 
     <div class="row">
         <div class="col-md-6 offset-md-3">
-        <form name="login" action="" method="post" novalidate>
+        <form name="register" action="" method="post" novalidate>
             <fieldset class="form-group">
                     <legend>{{title}}</legend>
                 {{ form.hidden_tag() }}
-                <p>
-                    {{ form.first_name.label }} <br>
-                    {{ form.first_name(size = 35) }}
-                    {% for error in form.first_name.errors %}
-                        <span class="error-message">{{ error }}</span>
-                    {% endfor %}
+                {% if type == "none" %}
+                    {{ form.register() }} <br> <br>
+                    {{ form.dj() }}
+                {% endif %}
+                {% if type == "dj" %}
+                     <p>
+                        {{ form2.name.label }} <br>
+                        {{ form2.name(size = 35) }}
+                        {% for error in form2.name.errors %}
+                            <span class="error-message">{{ error }}</span>
+                        {% endfor %}
 
-                </p>
-                <p>
-                    {{ form.last_name.label }} <br>
-                    {{ form.last_name(size = 35) }}
-                    {% for error in form.last_name.errors %}
-                        <span class="error-message">{{ error }}</span>
-                    {% endfor %}
+                    </p>
+                    <p>
+                        {{ form2.email.label }} <br>
+                        {{ form2.email(size = 35) }}
+                        {% for error in form2.email.errors %}
+                            <span class="error-message">{{ error }}</span>
+                        {% endfor %}
 
-                </p>
-                <p>
-                    {{ form.email.label }} <br>
-                    {{ form.email(size = 35) }}
-                    {% for error in form.email.errors %}
-                        <span class="error-message">{{ error }}</span>
-                    {% endfor %}
+                    </p>
+                     <p>
+                        {{ form2.genre.label }} <br>
+                        {{ form2.genre(size = 20) }}
+                        {% for error in form2.genre.errors %}
+                            <span class="error-message">{{ error }}</span>
+                        {% endfor %}
+                    </p>
+                    <p>
+                        {{ form2.age.label }} <br>
+                        {{ form2.age(size = 20) }}
+                        {% for error in form2.age.errors %}
+                            <span class="error-message">{{ error }}</span>
+                        {% endfor %}
+                    </p>
+                    <p>
+                        {{ form2.description.label }} <br>
+                        {{ form2.description(size = 250) }}
+                        {% for error in form2.description.errors %}
+                            <span class="error-message">{{ error }}</span>
+                        {% endfor %}
+                    </p>
+                    <p>
+                        {{ form2.price.label }} <br>
+                        {{ form2.price(size = 10) }}
+                        {% for error in form2.price.errors %}
+                            <span class="error-message">{{ error }}</span>
+                        {% endfor %}
+                    </p>
+                        <p>
+                        {{ form2.password.label }} <br>
+                        {{ form2.password(size = 15) }}
+                        {% for error in form2.password.errors %}
+                            <span class="error-message">{{ error }}</span>
+                        {% endfor %}
 
-                </p>
-                <p>
-                    {{ form.password.label }} <br>
-                    {{ form.password(size = 15) }}
-                    {% for error in form.password.errors %}
-                        <span class="error-message">{{ error }}</span>
-                    {% endfor %}
+                    </p>
+                      <p>
+                        {{ form2.password_confirm.label }} <br>
+                        {{ form2.password_confirm(size = 15) }}
+                        {% for error in form2.password_confirm.errors %}
+                            <span class="error-message">{{ error }}</span>
+                        {% endfor %}
 
-                </p>
-                  <p>
-                    {{ form.password_confirm.label }} <br>
-                    {{ form.password_confirm(size = 15) }}
-                    {% for error in form.password_confirm.errors %}
-                        <span class="error-message">{{ error }}</span>
-                    {% endfor %}
+                    </p>
+                        {{ form2.submit() }}
+                    </p>
 
-                </p>
-                <p>
-                    {{ form.submit() }}
+                {% elif type == "register" %}
+                    {{ form.hidden_tag() }}
+                    <p>
+                        {{ form2.first_name.label }} <br>
+                        {{ form2.first_name(size = 35) }}
+                        {% for error in form2.first_name.errors %}
+                            <span class="error-message">{{ error }}</span>
+                        {% endfor %}
 
-                </p>
+                    </p>
+                    <p>
+                        {{ form2.last_name.label }} <br>
+                        {{ form2.last_name(size = 35) }}
+                        {% for error in form2.last_name.errors %}
+                            <span class="error-message">{{ error }}</span>
+                        {% endfor %}
+
+                    </p>
+                    <p>
+                        {{ form2.email.label }} <br>
+                        {{ form2.email(size = 35) }}
+                        {% for error in form2.email.errors %}
+                            <span class="error-message">{{ error }}</span>
+                        {% endfor %}
+
+                    </p>
+                 <p>
+                        {{ form2.dob.label }} <br>
+                        {{ form2.dob(size = 15) }}
+                        {% for error in form2.dob.errors %}
+                            <span class="error-message">{{ error }}</span>
+                        {% endfor %}
+
+                    </p>
+                    <p>
+                        {{ form2.password.label }} <br>
+                        {{ form2.password(size = 15) }}
+                        {% for error in form2.password.errors %}
+                            <span class="error-message">{{ error }}</span>
+                        {% endfor %}
+
+                    </p>
+                      <p>
+                        {{ form2.password_confirm.label }} <br>
+                        {{ form2.password_confirm(size = 15) }}
+                        {% for error in form2.password_confirm.errors %}
+                            <span class="error-message">{{ error }}</span>
+                        {% endfor %}
+
+                    </p>
+                    <p>
+                        {{ form2.submit() }}
+
+                    </p>
+                {% endif %}
                     </fieldset>
+
         </form>
     </div>
     </div>

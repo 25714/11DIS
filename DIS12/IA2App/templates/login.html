@@ -24,6 +24,14 @@
                     {% endfor %}
 
                 </p>
+                    <p>
+                        {{ form.dj() }}
+                    {{ form.dj.label }}
+                    {% for error in form.dj.errors %}
+                        <span class="error-message">{{ error }}</span>
+                    {% endfor %}
+
+                </p>
                 <p>
                     {{ form.submit() }}
                 </p>

@@ -1,0 +1,10 @@
+{% extends "layout.html" %}
+{% block content %}
+
+
+{% for song in songlist %}
+
+    {{ song[0]['strTrack'] }}
+    {{ song[0]['strAlbum'] }}
+{% endfor %}
+{% endblock %}

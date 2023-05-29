@@ -1,0 +1,49 @@
+   {% extends "layout.html" %}
+    {% block content %}
+   {% if events %}
+   <table>
+       <thead>
+       <tr>
+           <th>Location</th>
+           <th>Details</th>
+           <th>DJ</th>
+           <th>Start Date</th>
+           <th>End Date</th>
+           <th>Privacy Setting</th>
+       </tr>
+       </thead>
+       <tbody>
+        {% for event in events %}
+       <tr>
+           <td>{{ event[0] }}</td>
+           <td>{{ event[1] }}</td>
+           <td>{{ event[2] }}</td>
+           <td>{{ event[3] }}</td>
+           <td>{{ event[4] }}</td>
+           <td>{{ event[5] }}</td>
+           <td>{% if event[6] == '1' %}
+                    Private
+                <td> <a href="{{ url_for('open_friend', id=event[7]) }}">Invite Friends</a></td>
+               {% else %}
+                    Public
+                <td> <a href="{{ url_for('open_friend', id=event[7]) }}">Invite Friends</a></td>
+               {% endif %}
+           </td>
+           <td>{% if event[2] == None %}
+                       <a href="{{ url_for('booking', id=event[7]) }}">Book A DJ</a>
+               {% endif %}
+           </td>
+
+
+
+       </tr>
+        {% endfor %}
+       </tbody>
+
+   </table>
+ {% else %}
+   You are not currently hosting events.
+   Click <a href="{{ url_for('create_event') }}">Here</a> to create an event!
+   {% endif %}
+
+   {% endblock %}

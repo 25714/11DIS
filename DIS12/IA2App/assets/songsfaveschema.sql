@@ -1,8 +1,8 @@
 DROP TABLE IF EXISTS songs_fave;
 
 CREATE TABLE songs_fave (
-    user_id TEXT NOT NULL,
-    song_id INTEGER PRIMARY KEY AUTOINCREMENT,
+    user_id INTEGER NOT NULL,
+    song_id INTEGER NOT NULL,
 
 
     FOREIGN KEY (user_id) REFERENCES users(user_id)

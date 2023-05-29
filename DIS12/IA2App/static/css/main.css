@@ -1,3 +1,18 @@
 li {
     padding: 5px;
 }
+form {
+    margin-left: 5%
+}
+.smallimg {
+    width: 5vw;
+    }
+.medimg {
+    width: 15vw;
+}
+.bannerimg {
+    width: 30vw;
+}
+body {
+    background-color: beige;
+}

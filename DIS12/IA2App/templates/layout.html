@@ -5,7 +5,7 @@
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
           integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
     <link rel="stylesheet" href="{{ url_for('static',filename='css/main.css') }}"/>
-    <title>HEY! This is the layout header</title>
+    <title>NorthisdeDJs</title>
 </head>
 {% include "includes/nav.html" %}
 <body>
@@ -18,10 +18,8 @@
         {% endfor %}
     {% endif %}
 {% endwith %}
-This is before block! <br>
 {% block content %}
 {% endblock %}
 <br>
-after rest!
 </body>
 </html>

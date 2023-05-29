@@ -1,0 +1,130 @@
+{% extends "layout.html" %}
+{% block content %}
+    <!--List all of the users that exist around here and then put them in a really nice box that m ke ssure that they know exactly who is who and then connect them toether in an efficient an dmoving way-->
+ <form name="bookdj" action="" method="post" novalidate>
+         {{ form.hidden_tag() }}
+        <p>
+            {{ form.name.label }} <br>
+            {{ form.name(size = 35) }}
+            {% for error in form.name.errors %}
+                <span class="error-message">{{ error }}</span>
+            {% endfor %}
+        </p>
+        <p>
+            {{ form.genre.label }} <br>
+            {{ form.genre(size = 15) }}
+            {% for error in form.genre.errors %}
+                <span class="error-message">{{ error }}</span>
+            {% endfor %}
+        </p>
+        <p>
+            {{ form.submit() }}
+        </p>
+ </form>
+{% if not session['event'] %}
+<h2>Favourites:</h2>
+<table class="table table-sm">
+    <thead> <h3>Previous Events: </h3>
+            <tr>
+                <th scope="col"> DJ</th>
+                <th scope="col"> Description</th>
+                <th scope="col"> Price</th>
+                <th scope="col"> Age</th>
+                <th scope="col"> Genre </th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for dj in djsf%}
+            <tr>
+                <td scope="row"> {{ dj[1] }}  </td>
+                <td> {{ dj[5] }}  </td>
+                <td> {{ dj[6] }}  </td>
+                <td> {{ dj[4] }}  </td>
+                <td> {{ dj[3] }}  </td>
+                <td>   <a href="{{ url_for('remove_favourite_dj', id=dj[0]) }}">Remove Favourite</a> </td>
+            </tr>
+        {% endfor %}
+            </tbody>
+        </table>
+<br>
+<h2>DJs</h2>
+<table class="table table-sm">
+    <thead> <h3>Previous Events: </h3>
+            <tr>
+                <th scope="col"> DJ</th>
+                <th scope="col"> Description</th>
+                <th scope="col"> Price</th>
+                <th scope="col"> Age</th>
+                <th scope="col"> Genre </th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for dj in djsf%}
+            <tr>
+                <td scope="row"> {{ dj[1] }}  </td>
+                <td> {{ dj[5] }}  </td>
+                <td> {{ dj[6] }}  </td>
+                <td> {{ dj[4] }}  </td>
+                <td> {{ dj[3] }}  </td>
+                <td>     <a href="{{ url_for('favourite_dj', id=dj[0]) }}">Favourite DJ</a> </td>
+            </tr>
+        {% endfor %}
+            </tbody>
+        </table>
+{% else %}
+
+<h2>Favourites:</h2>
+<table class="table table-sm">
+    <thead> <h3>Previous Events: </h3>
+            <tr>
+                <th scope="col"> DJ</th>
+                <th scope="col"> Description</th>
+                <th scope="col"> Price</th>
+                <th scope="col"> Age</th>
+                <th scope="col"> Genre </th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for dj in djsf%}
+            <tr>
+                <td scope="row"> {{ dj[1] }}  </td>
+                <td> {{ dj[5] }}  </td>
+                <td> {{ dj[6] }}  </td>
+                <td> {{ dj[4] }}  </td>
+                <td> {{ dj[3] }}  </td>
+                <td>  <a href="{{ url_for('sendbooking', id=dj[0]) }}">Request DJ</a> </td>
+            </tr>
+        {% endfor %}
+            </tbody>
+        </table>
+<br>
+<h2>DJs</h2>
+<table class="table table-sm">
+    <thead> <h3>Previous Events: </h3>
+            <tr>
+                <th scope="col"> DJ</th>
+                <th scope="col"> Description</th>
+                <th scope="col"> Price</th>
+                <th scope="col"> Age</th>
+                <th scope="col"> Genre </th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for dj in djsf%}
+            <tr>
+                <td scope="row"> {{ dj[2] }}  </td>
+                <td> {{ dj[5] }}  </td>
+                <td> {{ dj[6] }}  </td>
+                <td> {{ dj[4] }}  </td>
+                <td> {{ dj[3] }}  </td>
+                <td> &nbsp;  <a href="{{ url_for('sendbooking', id=dj[0]) }}">Request DJ</a> </td>
+            </tr>
+        {% endfor %}
+            </tbody>
+        </table>
+{% endif %}
+ {% endblock %}

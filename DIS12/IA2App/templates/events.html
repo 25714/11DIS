@@ -1,0 +1,80 @@
+{% extends "layout.html" %}
+{% block content %}
+    <!--List all of the users that exist around here and then put them in a really nice box that m ke ssure that they know exactly who is who and then connect them toether in an efficient an dmoving way-->
+<form name="events" action="" method="post" novalidate>
+<table class="table table-sm">
+        <thead> <h3>Events: </h3>
+            <tr>
+                <th scope="col"> Location</th>
+                <th scope="col"> Description</th>
+                <th scope="col"> Date</th>
+                <th scope="col"> Start Time</th>
+                <th scope="col"> End Time </th>
+                <th scope="col"> Host</th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+        {% if next %}
+            <tr>
+                <td scope="row"> {{ next[1] }}  </td>
+                <td> {{ next[3] }}  </td>
+                <td> {{ next[6] }}  </td>
+                <td> {{ next[7] }}  </td>
+                <td> {{ next[8] }}  </td>
+                <td> {{ next[10] }} {{ next[11] }} </td>
+
+                <td> <a href="{{ url_for('joinevent', id=next[0]) }}">Join Event!</a> </td>
+            </tr>
+        {% else %}
+        {% for event in eventlist %}
+            <tr>
+                <td scope="row"> {{ event[1] }}  </td>
+                <td> {{ event[3] }}  </td>
+                <td> {{ event[6] }}  </td>
+                <td> {{ event[7] }}  </td>
+                <td> {{ event[8] }}  </td>
+                <td> {{ event[10] }} {{ event[11] }} </td>
+                {% if session['dj'] %}
+                <td><a href="{{ url_for('select_event', id=event[0]) }}">Check Songs </a> </td>
+                <td><a href="{{ url_for('declineevent', id=event[0]) }}">Decline Event </a> </td>
+                {% else %}
+                <td> <a href="{{ url_for('joinevent', id=event[0]) }}">Join Event!</a> </td>
+                {% endif %}
+            </tr>
+        {% endfor %}
+        {% endif %}
+            </tbody>
+        </table>
+{% if oldeventlist %}
+    <table class="table table-sm">
+    <thead> <h3>Previous Events: </h3>
+            <tr>
+                <th scope="col"> Location</th>
+                <th scope="col"> Description</th>
+                <th scope="col"> Date</th>
+                <th scope="col"> Start Time</th>
+                <th scope="col"> End Time </th>
+                <th scope="col"> Host</th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for event in oldeventlist %}
+            <tr>
+                <td scope="row"> {{ event[1] }}  </td>
+                <td> {{ event[3] }}  </td>
+                <td> {{ event[6] }}  </td>
+                <td> {{ event[7] }}  </td>
+                <td> {{ event[8] }}  </td>
+                <td> {{ event[10] }} {{ event[11] }} </td>
+                <td><a href="{{ url_for('select_event', id=event[0]) }}">Check Songs </a> </td>
+            </tr>
+        {% endfor %}
+            </tbody>
+        </table>
+    {% endif %}
+
+    </form>
+
+{% endblock %}

@@ -1,7 +1,7 @@
 import jsonify
 from flask import Flask, render_template, request
 import requests
-import sqlite3
+import sqlite3, sys
 def search_albums(artist_name):
     API_KEY = '523532'
     URL = f'https://theaudiodb.com/api/v1/json/{API_KEY}/searchalbum.php?s={artist_name}'
@@ -10,14 +10,49 @@ def search_albums(artist_name):
     albums = data['album']
     return albums
 
+def search_track(album_id):
+    API_KEY = '523532'
+    URL = f'https://theaudiodb.com/api/v1/json/{API_KEY}/track.php?m={album_id}'
+    response = requests.get(URL)
+    data = response.json()
+    track = data['track']
+    return track
+def search_track_id(track_id):
+    API_KEY = '523532'
+    URL = f'https://theaudiodb.com/api/v1/json/{API_KEY}/track.php?h={track_id}'
+    response = requests.get(URL)
+    data = response.json()
+    track = data['track']
+    return track
 
-def save_albums_to_db(artist_name, albums):
-    conn = sqlite3.connect('albums.db')
-    c = conn.cursor()
-    c.execute('''CREATE TABLE IF NOT EXISTS albums
-                 (artist TEXT, album TEXT, year INTEGER)''')
+def search_artist(artist_name, type):
+    API_KEY = '523532'
+    if type == "name":
+        query = "search.php?s"
+    if type == "id":
+        query = "artist.php?i"
+    URL = f'https://theaudiodb.com/api/v1/json/{API_KEY}/{query}={artist_name}'
+    response = requests.get(URL)
+    data = response.json()
+    return data
+def save_albums_to_db(artist_name, album_id, albums):
+        conn = sqlite3.connect(r'C:\Users\Lucas Nguyen\PycharmProjects\11DIS\DIS12\IA2App\ndjdatabase.db')
+        conn.execute("INSERT INTO albums VALUES (?,?,?)", (album_id, artist_name,  albums))
+        conn.commit()
+        conn.close()
 
-    for album in albums:
-        c.execute("INSERT INTO albums VALUES (?,?,?)", (artist_name, album['strAlbum'], album['intYearReleased']))
+def dictionary_into_db(dictionary, tablename):
+    conn = sqlite3.connect(r'C:\Users\Lucas Nguyen\PycharmProjects\11DIS\DIS12\IA2App\ndjdatabase.db')
+    values = []
+    for key in dictionary:
+        if dictionary[key] == None:
+            values.append("None")
+        else:
+            values.append(dictionary[key])
+    conn.execute(f"INSERT INTO {tablename} VALUES ({('?,'*len(values))[0:(len(values)*2)-1]})", (values))
+    # conn.execute(f"INSERT INTO songs_fave VALUES ({', '.join(values)})"), (values)
     conn.commit()
     conn.close()
+
+    # except:
+    # return(f"INSERT INTO {tablename} VALUES ({', '.join(values)})")

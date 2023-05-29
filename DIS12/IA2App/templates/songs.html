@@ -1,7 +1,128 @@
-   {% extends "layout.html" %}
-    {% block content %}
-   Hello! I am lucas. <br>
-   I love chicken
+  {% extends "layout.html" %}
+   {% block content %}
+   <form name="songs" action="" method="post" novalidate>
+   {{ form.hidden_tag() }}
+        {% if session['event'] %}
+        {% endif %}
+        {{ form.album.label }}
+        {{ form.album(size = 35) }}
+        {% for error in form.album.errors %}
+            <span class="error-message">{{ error }}</span>
+        {% endfor %}
+
+        {{ form.category.label }}
+        {{ form.category() }}
+        {% for error in form.category.errors %}
+            <span class="error-message">{{ error }}</span>
+        {% endfor %}
 
 
+        {{ form.submit() }}
+       {% if favourites %}
+       <table class="table table-sm">
+        <thead> <h3>Favourites:</h3>
+            <tr>
+                <th scope="col"> Track</th>
+                <th scope="col"> Album</th>
+                <th scope="col"> Artist</th>
+
+                <th scope="col"> UnFavourite</th>
+                {% if session['event'] %}
+                <th scope="col"> Add to Event</th>
+                {% endif %}
+            </tr>
+        </thead>
+        <tbody>
+        {% for song in favourites %}
+            <tr>
+                <td scope="row"> {{ song[0] }} </td>
+                <td> {{ song[1] }} </td>
+                <td> {{ song[3] }} </td>
+                <td> <a href="{{ url_for('remove_favourite_song', id=song[2]) }}">Remove Favourite </a> </td>
+                {% if session['event'] %}
+                <td><a href="{{ url_for('addtoevent', id=song[2]) }}">Add to Event</a> </td>
+                {% endif %}
+            </tr>
+        {% endfor %}
+        {% endif %}
+            </tbody>
+        </table>
+        {% if songlist %}
+        <table class="table table-sm">
+        <thead>
+            <tr>
+                <th scope="col"> Track</th>
+                <th scope="col"> Album</th>
+                <th scope="col"> Year</th>
+                 {% if not session['dj'] %}
+                <th scope="col"> Favourite</th>
+                {% if session['event'] %}
+                <th scope="col"> Add to Event</th>
+                {% endif %}
+                {% endif %}
+            </tr>
+        </thead>
+        <tbody>
+        {% for song in songlist %}
+            <tr>
+                <td scope="row"> {{ song[0] }} </td>
+                <td> {{ song[1] }} </td>
+                <td> {{ song[5] }} </td>
+                {% if not session['dj'] %}
+                <td> <a href="{{ url_for('favourite_song', id=song[2]) }}">Favourite </a> </td>
+                {% if session['event'] %}
+                <td><a href="{{ url_for('addtoevent', id=song[2]) }}">Add to Event</a> </td>
+                {% endif %}
+                {% endif %}
+            </tr>
+        {% endfor %}
+
+            </tbody>
+        </table>
+        </tr>
+        <br>
+       {% endif %}
+           {% if data is not none %}
+       <table class="table table-sm">
+
+        <thead>
+    <th scope="col"> Thumbnail</th>
+    <th scope="col"> Album</th>
+    <th scope="col"> Year </th>
+         <tbody>
+            {% for album in data %}
+            <tr>
+                {% if album[2] == "None" %}
+                   <td scope="row"> <img src="static/images/noimg.jpg" alt="No Image Found" class="smallimg img-fluid. max-width: 30%; and height: auto img-thumbnail"> </td>
+                {% else %}
+            <td scope="row"> <img src="{{ album[2] }}" alt="Album Image" class="smallimg img-fluid. max-width: 30%; and height: auto img-thumbnail"> </td>
+                {% endif %}
+            <td>{{ album[0] }}</td>
+            <td>{{ album[1] }}</td>
+
+    {% endfor %}
+
+            </td>
+        </tr>
+         </tbody>
+        </table>
+       {% endif %}
+                {% if artistlist %}
+                    <table class="table table-sm">
+                    <thead>
+                    {% for artist in artistlist %}
+                        <tr>
+                            <th scope="col">  <a href="{{ url_for('artist', id=artist[5]) }}"><img src="{{ artist[1] }}" alt="Artist Thumbnail" class="medimg img-fluid. max-width: 30%; and height: auto img-thumbnail"></a></th>
+                            <th> </th>
+                        </tr>
+                    {% endfor %}
+                    </thead>
+                    <tbody>
+
+                        </tbody>
+                    </table>
+                {% endif %}
+       </form>
+            <td>
+   </td><form>
    {% endblock %}

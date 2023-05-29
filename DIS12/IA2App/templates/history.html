@@ -1,0 +1,43 @@
+  {% extends "layout.html" %}
+   {% block content %}
+<form name="event" action="" method="post" novalidate>
+{{ form.hidden_tag() }}
+         {{ form.location.label }}
+         {{ form.location() }}
+         {% for error in form.location.errors %}
+            <span class="error-message">{{ error }}</span>
+         {% endfor %}
+         <br>
+         {{ form.submit() }}
+
+{% if not history1 == None %}
+    <table class="table table-sm">
+        <thead> <h3>History:</h3>
+            <tr>
+                <th scope="col"> Track Name</th>
+                <th scope="col"> Votes</th>
+            </tr>
+        </thead>
+        <tbody>
+        AGES: {{ information[0][0][0] }}
+        {% for inf in information %}
+                {% for i in inf %}
+           {% for parts in i %}
+        <tr scope="row">
+            <td>   {{parts[3] }} </td>
+            <td>   {{parts[4] }} </td>
+            </tr>
+        {%endfor %}
+        {%endfor %}
+        {%endfor %}
+
+            </tbody>
+        </table>
+        {% if songlist %}
+
+    {{information}}
+{% endif %}
+{%endif %}
+
+   {% endblock %}
+
