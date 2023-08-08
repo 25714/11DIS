@@ -1,0 +1,39 @@
+   {% extends "layout.html" %}
+    {% block content %}
+    <!--List all of the users that exist around here and then put them in a really nice box that m ke ssure that they know exactly who is who and then connect them toether in an efficient an dmoving way-->
+    <form name="friends" action="" method="post" novalidate>
+   {{ form.hidden_tag() }}
+         {{ form.friendId.label }} <br>
+         {{ form.friendId() }}
+         {% for error in form.friendId.errors %}
+            <span class="error-message">{{ error }}</span>
+         {% endfor %}
+         {{ form.submit() }}
+        <p>
+        {% if friendslist == None %}
+            Sorry, there are no friends here!
+        {% else %}
+            <table class="table table-sm">
+                <thead>
+                    <th scope="col">Friend Name</th>
+                    <th scope="col">Friend Email</th>
+                <th></th><th></th>
+                </thead>
+        <tbody>
+            {% for friend in friendslist %}
+            <tr>
+                <td scope="row">{{ friend[1] }} {{ friend[2] }}</td>
+
+            <td> {{friend[3] }} </td>
+                <td> <a href="{{ url_for('checkfriendevents', id=friend[0]) }}">See events</a></td>
+                <td> <a href="{{ url_for('checkfriendsongs', id=friend[0]) }}">See Favourite Songs</a></td>
+                {% if session['event'] %} <td> <a href="{{ url_for('invitetoevent', id=friend[0]) }}">Invite To Event</a></td> {% endif %}
+                </tr>
+            {% endfor %}
+        </tbody>
+            </table>
+        {% endif %}
+        </p>
+
+
+   {% endblock %}

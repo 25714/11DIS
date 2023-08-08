@@ -71,3 +71,6 @@ class HistoryForm(FlaskForm):
     location = StringField("Search Location")
     submit = SubmitField("Search")
 
+class SongSearchForm(FlaskForm):
+    search = StringField("Search")
+    submit = SubmitField("Search")

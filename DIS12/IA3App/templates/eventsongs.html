@@ -1,0 +1,26 @@
+{% extends "layout.html" %}
+{% block content %}
+    <!--List all of the users that exist around here and then put them in a really nice box that m ke ssure that they know exactly who is who and then connect them toether in an efficient an dmoving way-->
+<form name="joined" action="" method="post" novalidate>
+    {% if songlist == [] %}
+    No songs yet! <a href="{{ url_for('open_event', id=events) }}">Click Here </a> to select songs
+
+    {% else %}
+    <h2>{{ songlist[0][1] }}:{{ songlist[0][2] }}</h2>
+    <table class="table table-sm">
+        <thead>
+            <th scope="col">Song</th>
+            <th scope="col">Location</th>
+            <th scope="col">Date</th>
+            <th scope="col">Votes</th>
+        </thead>
+{% for song in songlist %}
+        <tr>
+<td  scope="row">{{ song[0] }} </td> <td> {{song[3]}}</td>
+            </tr>
+ {% endfor %}
+    </table>
+</form>
+{% endif %}
+{% endblock %}
+

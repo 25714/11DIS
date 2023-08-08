@@ -1,0 +1,49 @@
+  {% extends "layout.html" %}
+   {% block content %}
+   <form name="songs2" action="" method="post" novalidate>
+   {{ form.hidden_tag() }}
+        {{ form.search.label }}
+        {{ form.search(size = 35) }}
+        {% for error in form.search.errors %}
+            <span class="error-message">{{ error }}</span>
+        {% endfor %}
+        {{ form.submit() }}
+
+                {% if data %}
+                {% if data['tracks'] %}
+       <br><br>
+                    <img src="{{ url_for('static',filename='images/Spotify_Logo_RGB_Black.png') }}" class="smallimg img-fluid" alt="Spotify Logo">
+       <br><br>
+       <a href="https://open.spotify.com/?">LISTEN ON SPOTIFY</a>
+                    <table class="table table-sm">
+                    <thead>
+                        <tr>
+                            <th>Song Name</th>
+                            <th>Album Cover</th>
+                            <th>Artists </th>
+                            <th>Explicit</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for item in data['tracks']['items'] %}
+                        <tr>
+                            <td> {{ item['name'] }}</td>
+<!--                            <th> {# item['album'] #}</th>-->
+                            <td> <img src="{{ item['album']['images'][0]['url']}}" class="smallimg img-fluid. max-width: 30%; and height: auto img-thumbnail" > </td>
+                            <td>{% for artist in item['artists'] %}
+                                {{ artist['name'] }},
+                                {% endfor %}
+                                </td>
+                            <td> {{ item['explicit'] }}</td>
+
+                        </tr>
+                    {% endfor %}
+                        </tbody>
+                    </table>
+                {% endif %}
+                {% endif %}
+       </form>
+            <td>
+   </td>
+   {% endblock %}
+<!--                            <th scope="col">  <a href="{{ url_for('artist', id=artist[5]) }}"><img src="{{ artist[1] }}" alt="Artist Thumbnail" class="medimg img-fluid. max-width: 30%; and height: auto img-thumbnail"></a></th>-->

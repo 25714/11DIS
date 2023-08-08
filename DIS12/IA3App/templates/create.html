@@ -1,0 +1,48 @@
+  {% extends "layout.html" %}
+   {% block content %}
+<form name="create" action="" method="post" novalidate>
+{{ form.hidden_tag() }}
+         {{ form.location.label }} <br>
+         {{ form.location() }}
+         {% for error in form.location.errors %}
+            <span class="error-message">{{ error }}</span>
+         {% endfor %}
+         <br>
+         {{ form.private.label }} <br>
+         {{ form.private() }}
+         {% for error in form.private.errors %}
+            <span class="error-message">{{ error }}</span>
+         {% endfor %}
+         <br>
+         {{ form.details.label }} <br>
+         {{ form.details() }}
+         {% for error in form.details.errors %}
+            <span class="error-message">{{ error }}</span>
+         {% endfor %}
+         <br>
+         {{ form.date.label }} <br>
+         {{ form.date() }}
+         {% for error in form.date.errors %}
+            <span class="error-message">{{ error }}</span>
+         {% endfor %}
+         <br>
+         {{ form.start_time.label }} <br>
+         {{ form.start_time() }}
+         {% for error in form.start_time.errors %}
+            <span class="error-message">{{ error }}</span>
+         {% endfor %}<br>
+        {{ form.end_time.label }} <br>
+         {{ form.end_time() }}
+         {% for error in form.end_time.errors %}
+            <span class="error-message">{{ error }}</span>
+         {% endfor %}
+         <br>
+        {{ form.explicit.label }} <br>
+         {{ form.explicit() }}
+         {% for error in form.explicit.errors %}
+            <span class="error-message">{{ error }}</span>
+         {% endfor %}
+         <br>
+         {{ form.submit() }}
+  {% endblock %}
+

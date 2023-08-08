@@ -1,11 +1,11 @@
 from flask import request, redirect, url_for, flash, session, render_template #Grabbing things I need in order to use flask well, and pull things to and from html and users
 from DIS12.IA2App import app #Just to import things such as Secret Key and make it work
-from DIS12.IA2App.forms import LoginForm, RegisterForm, SearchForm, FaveForm, FriendForm, EventForm, DjForm, RTypeForm, SearchDjForm, HistoryForm # All the diffeernt forms I used in order to do that effectively
-from DIS12.IA2App.apifunctions import search_albums, search_track, search_artist, search_track_id, save_albums_to_db, dictionary_into_db #Grab all of the functions to call from the AudioDB Api
+from DIS12.IA2App.forms import LoginForm, RegisterForm, SearchForm, FaveForm, FriendForm, EventForm, DjForm, RTypeForm, SearchDjForm, HistoryForm, SongSearchForm# All the diffeernt forms I used in order to do that effectively
+from DIS12.IA2App.apifunctions import search_albums, search_track, search_artist, search_track_id, save_albums_to_db, dictionary_into_db, spotify_search_track #Grab all of the functions to call from the AudioDB Api
 import sqlite3, json #Grab Sqlite so we can interact with the  database
 from werkzeug.security import generate_password_hash, check_password_hash #Encrypting to make sure users passwords are safe!
 from datetime import date, datetime #Dates in order to do Date of birthds
-
+from argon2 import PasswordHasher
 def db_connect(): #Connecting to the database, just makes it a little cleaner.
     connection = sqlite3.connect(r'C:\Users\Lucas Nguyen\PycharmProjects\11DIS\DIS12\IA2App\ndjdatabase.db ')
     return connection
@@ -22,8 +22,10 @@ def index():
     #         do = fave.favourite.data
     # else:
     #     data = ['None']
-
+    # api.genius.com/oauth/authorize?client_id=8vYGlnDty9QFO5IHPazqHccsdnh6musaTxarjVowTv3ZrmczZoW72ylw8qiugt-G&redirect_uri=http://127.0.0.1:5000/genius/api&scope=me&response_type=code
+    # https://api.genius.com/search?q=Missy%20Elliott&access_token=n8QGBuDgCooyVv-pzDHcJSIGST8pWBA1lRt71SMrIiaZ7CghWbF3oJTjwae5qTv9
     # return "<h1>Hello Everyone!!</h>"
+
     return render_template("index.html", login=False, index=True) #Returning render template, and sending activity.
 @app.route("/", methods=['GET', 'POST'])
 @app.route("/index", methods=['GET', 'POST'])
@@ -172,6 +174,16 @@ def friends(friendslist = None): #Friends! Friendslist = None
                 flash("Sorry, you are already friends!", "danger")#Incase they are already friends
 
     return render_template("friends.html", friends=True, form=form, friendslist=friendslist) #Export the friends list and form
+@app.route("/song2", methods=['GET', 'POST'])
+def song2(data=None):
+    form = SongSearchForm()
+    if form.validate_on_submit():
+        search = form.search.data
+        data = spotify_search_track(search,"0")
+
+    return render_template("song2.html", login=False, songs=True, form=form, data=data) #return everything, faves if no search,
+
+
 @app.route("/songs", methods=['GET', 'POST'])
 def songs(data=None, artist=None): #Song searching
     fave = FaveForm()

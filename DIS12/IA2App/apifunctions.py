@@ -56,3 +56,18 @@ def dictionary_into_db(dictionary, tablename):
 
     # except:
     # return(f"INSERT INTO {tablename} VALUES ({', '.join(values)})")
+
+
+def spotify_search_track(string,offset):
+
+    url = "https://api.spotify.com/v1/search/"
+    querystring = {"q": string,"type":"track","offset":offset, "limit":"20","numberOfTopResults":"5"}
+    key = "BQA9qmXaOspJH7RuA9mbGRFLL_HXzMMHrff3CirZ_GOSWad3dmLFkESMkkmCZ9EsgBw9B6egRYm_uDldANqKg79h_Y3inBRB5ie6aBCiUBojsdZUT2Y"
+    headers = {
+        "Authorization": f"Bearer {key}",}
+    response = requests.get(url, headers=headers, params=querystring)
+    data = response.json()
+    return data
+    # for point in data['tracks']['items']:
+    #     print(point['name'],point['explicit'])
+    # print(data)

@@ -1,0 +1,27 @@
+   {% extends "layout.html" %}
+    {% block content %}
+    <!--List all of the users that exist around here and then put them in a really nice box that m ke ssure that they know exactly who is who and then connect them toether in an efficient an dmoving way-->
+<!--        Left side picture -->
+   <img src="{{ artists[1] }}" alt="artist thumbnail" class="float-left medimg ml-5">
+        <div class="container">
+
+  <div class="row align-items-start">
+
+        <!--    Banner and logo-->
+<img src="{{ artists[2] }}" alt="artist banner" class="float-left mx-auto ">
+<img src=" {{ artists[3] }}"  alt="Artist logo" class="float-left mx-auto ">
+  </div>
+
+
+
+<!--        Right side description changed by lang feature-->
+<h2>Description:</h2>
+        <div class="row align-items-center"> {{ artists[4] }} </div>
+<!-- addtional left sdie details, such as genre, style etc.     -->
+<!--        Bottom side socials-->
+            <div class="row align-items-end">
+  socialssss:
+</div>
+            </div>
+   {% endblock %}
+
